@@ -1,0 +1,17 @@
+{
+  "meta": "./components/meta.data.json",
+  "plugins": [
+    {
+      "name": "header",
+      "link": "./plugins/header.data.json"
+    },
+    {
+      "name": "main",
+      "link": "./plugins/main.data.json"
+    },
+    {
+      "name": "footer",
+      "link": "./plugins/footer.data.json"
+    }
+  ]
+}

@@ -1,0 +1,4 @@
+{
+  "logo": "./kaspersky.svg",
+  "menu": "./components/menu.data.json"
+}

@@ -1,0 +1,14 @@
+{
+  "items": [
+    {
+      "name": "b2c",
+      "link": "/b2c",
+      "subMenu": "./components/b2cSubMenu.data.json"
+    },
+    {
+      "name": "b2b",
+      "link": "/b2b",
+      "subMenu": "./components/b2bSubMenu.data.json"
+    }
+  ]
+}

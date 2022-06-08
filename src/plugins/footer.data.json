@@ -1,0 +1,5 @@
+{
+  "logo": "./kaspersky.svg",
+  "menu": "./components/menu.data.json",
+  "copyright": "All rights reserved"
+}
