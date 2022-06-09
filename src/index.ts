@@ -22,20 +22,28 @@ const windowsPathRegexp = /^[a-zA-Z]:\\[\\\S|*\S]?.*$/;
 
 // Рекурсивно соединяем JSON по ссылкам
 async function combineJson(json: JSONObject): Promise<JSONObject> {
-  const result = { ...json };
+  const result: JSONObject = {};
 
-  for (const [key, entry] of Object.entries(result)) {
-    if (Array.isArray(entry)) {
-      result[key] = await Promise.all(entry.map(combineJson));
-    } else if (typeof entry === "string") {
+  for (const [key, value] of Object.entries(json)) {
+    if (Array.isArray(value)) {
+      const combinedPromiseArray = value.map((item) => combineJson(item));
+      const combinedArray = await Promise.all(combinedPromiseArray);
+      result[key] = combinedArray;
+    } else if (typeof value === "string") {
       // Или можно использовать
       // entry.startsWith("./") && entry.endsWith("data.json")
-      if (componentPathRegexp.test(entry)) {
-        const entryJson = await parseJsonFile(entry);
-        result[key] = await combineJson(entryJson);
-      } else if (windowsPathRegexp.test(entry)) {
-        result[key] = entry.replaceAll(path.win32.sep, path.posix.sep);
+      if (componentPathRegexp.test(value)) {
+        const component = await parseJsonFile(value);
+        const combinedComponent = await combineJson(component);
+        result[key] = combinedComponent;
+      } else if (windowsPathRegexp.test(value)) {
+        const formattedPath = value.replaceAll(path.win32.sep, path.posix.sep);
+        result[key] = formattedPath;
+      } else {
+        result[key] = value;
       }
+    } else {
+      result[key] = value;
     }
   }
 
